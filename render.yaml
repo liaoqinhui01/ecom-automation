@@ -38,7 +38,6 @@ services:
       name: product-data
       mountPath: /app/data
       sizeGB: 5
-    healthCheckPath: /health
     envVars:
       - key: REDIS_URL
         fromService:
@@ -53,7 +52,6 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     plan: starter
-    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -72,7 +70,6 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     plan: starter
-    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -97,7 +94,6 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     plan: starter
-    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -122,7 +118,6 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     plan: starter
-    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -151,7 +146,6 @@ services:
       name: xianyu-data
       mountPath: /app/data
       sizeGB: 2
-    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         value: sqlite:////app/data/xianyu.db
@@ -170,7 +164,6 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     plan: starter
-    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -189,7 +182,6 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     plan: starter
-    healthCheckPath: /health
     disk:
       name: crawler-data
       mountPath: /app/data
