@@ -182,7 +182,7 @@ function MetricCard({ title, value, prefix, suffix, color, trend, trendLabel, lo
   );
 }
 
-function RealtimeOrderFeed() {
+function RealtimeOrderFeed({ orders = [] }) {
   return (
     <Card
       title={
@@ -196,7 +196,7 @@ function RealtimeOrderFeed() {
       styles={{ body: { padding: '12px 24px', maxHeight: 400, overflowY: 'auto' } }}
     >
       <List
-        dataSource={effectiveRealtimeOrders}
+        dataSource={orders}
         renderItem={(item) => (
           <List.Item style={{ padding: '10px 0' }}>
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', gap: 12 }}>
@@ -746,7 +746,7 @@ export default function Dashboard() {
           </Card>
         </Col>
         <Col xs={24} lg={8}>
-          <RealtimeOrderFeed />
+          <RealtimeOrderFeed orders={effectiveRealtimeOrders} />
         </Col>
       </Row>
 
