@@ -13,6 +13,7 @@ import SupplyChain from '../pages/SupplyChain';
 import Customers from '../pages/Customers';
 import Finance from '../pages/Finance';
 import Settings from '../pages/Settings';
+import StockScanner from '../pages/StockScanner';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: 'customers', element: <Customers /> },
       { path: 'marketing', element: <Marketing /> },
       { path: 'analytics', element: <Analytics /> },
+      { path: 'stock-scanner', element: <StockScanner /> },
       { path: 'service', element: <CustomerService /> },
       { path: 'finance', element: <Finance /> },
       { path: 'supply-chain', element: <SupplyChain /> },

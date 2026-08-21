@@ -70,6 +70,7 @@ services:
     environment:
       DATABASE_URL: postgresql://ecom:${DB_PASSWORD:-ecom2024}@postgres:5432/ecom_automation
       REDIS_URL: redis://redis:6379/0
+      STOCK_SCANNER_URL: http://stock-scanner:8010/api/stocks
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
       ENV: ${ENV:-production}
     depends_on:
@@ -77,10 +78,32 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      stock-scanner:
+        condition: service_healthy
     networks:
       - ecom-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
+      retries: 3
+
+  # 日周月全市场扫描服务 (端口 8010)
+  stock-scanner:
+    build:
+      context: ./services/stock-scanner
+      dockerfile: Dockerfile
+    container_name: stock-scanner
+    restart: unless-stopped
+    ports:
+      - "8010:8010"
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    networks:
+      - ecom-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8010/health')"]
       interval: 30s
       timeout: 10s
       start_period: 15s

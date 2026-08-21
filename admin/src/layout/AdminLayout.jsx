@@ -37,6 +37,11 @@ const menuItems = [
         icon: <BarChartOutlined />,
         label: '数据中心',
       },
+      {
+        key: '/stock-scanner',
+        icon: <RadarChartOutlined />,
+        label: '日周月扫描',
+      },
     ],
   },
   {

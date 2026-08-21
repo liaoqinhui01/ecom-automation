@@ -29,7 +29,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # 导入路由
-from routes import shops, products, orders, messages, aftersales, competitors, reports, dashboard, settings, inventory, tickets, customers
+from routes import shops, products, orders, messages, aftersales, competitors, reports, dashboard, settings, inventory, tickets, customers, stocks
 from routes.auth import oauth
 
 # 导入统一错误处理和中间件
@@ -48,6 +48,7 @@ async def lifespan(app: FastAPI):
     logger.info("   /api/inventory  → oms-service:8005")
     logger.info("   /api/tickets    → oms-service:8005")
     logger.info("   /api/dashboard  → oms-service:8005")
+    logger.info("   /api/stocks     → stock-scanner:8010")
     yield
     logger.info("🛑 API网关关闭")
 
@@ -93,6 +94,7 @@ app.include_router(aftersales.router, prefix="/api/aftersales", tags=["售后服
 app.include_router(competitors.router, prefix="/api/competitors", tags=["竞品分析"])
 app.include_router(reports.router, prefix="/api/reports", tags=["报表统计"])
 app.include_router(settings.router, prefix="/api/settings", tags=["系统设置"])
+app.include_router(stocks.router, prefix="/api/stocks", tags=["日周月全市场扫描"])
 
 # 代理路由 → 转发到后端微服务
 app.include_router(products.router, prefix="/api/products", tags=["商品管理 (→product-service)"])
@@ -126,6 +128,7 @@ async def root():
             "competitors": "/api/competitors",
             "reports": "/api/reports",
             "settings": "/api/settings",
+            "stocks": "/api/stocks",
         },
     }
 
