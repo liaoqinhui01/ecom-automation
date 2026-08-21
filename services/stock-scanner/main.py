@@ -40,18 +40,6 @@ def universe():
         raise HTTPException(status_code=502, detail=f"获取A股股票池失败: {exc}") from exc
 
 
-@app.get("/api/stocks/{code}")
-def single_stock(code: str):
-    code = code.strip()
-    if len(code) != 6 or not code.isdigit():
-        raise HTTPException(status_code=400, detail="股票代码必须是6位数字")
-    market = "SZ" if code.startswith(("000", "001", "002", "003", "300")) else "SS"
-    try:
-        return scan_one(Quote(code=code, name=code, market=market, symbol=f"{code}.{market}"))
-    except MarketDataError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
-
-
 @app.post("/api/stocks/scan")
 def scan(request: ScanRequest):
     try:
@@ -78,6 +66,18 @@ def rules():
         ],
         "disclaimer": "只对明确、可计算条件自动判定；未定义阈值、分时、筹码和模糊图形返回insufficient。",
     }
+
+
+@app.get("/api/stocks/{code}")
+def single_stock(code: str):
+    code = code.strip()
+    if len(code) != 6 or not code.isdigit():
+        raise HTTPException(status_code=400, detail="股票代码必须是6位数字")
+    market = "SZ" if code.startswith(("000", "001", "002", "003", "300")) else "SS"
+    try:
+        return scan_one(Quote(code=code, name=code, market=market, symbol=f"{code}.{market}"))
+    except MarketDataError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 if __name__ == "__main__":
